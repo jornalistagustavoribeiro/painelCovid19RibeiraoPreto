@@ -55,9 +55,8 @@ mortesDia = px.bar(caso_full, x="date", y="new_deaths",
 
 # creating dash app
 
-server = app.server
-
 app = dash.Dash(__name__)
+server = app.server
 app.title = 'Covid-19 Ribeirão Preto'
 
 app.layout = html.Div([
