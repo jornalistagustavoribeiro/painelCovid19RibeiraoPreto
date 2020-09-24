@@ -62,11 +62,15 @@ app.title = 'Covid-19 Ribeirão Preto'
 app.layout = html.Div([
     html.Div('Atualizações sobre a pandemia de Covid-19 em Ribeirão Preto', 
               style={'textAlign':'center'}),
+   html.Div([html.A(href='mailto:jornalistagustavoribeiro@gmail.com', 
+                    children="jornalistagustavoribeiro@gmail.com")],
+              style={'textAlign':'center'}),
+    html.Div([html.A(href='https://github.com/jornalistagustavoribeiro/PainelCovid19RibeiraoPreto', 
+                    children="Github")],
+              style={'textAlign':'center'}),
     html.Div([dcc.Graph(id='Últimas atualizações', figure=tabelaMostra)]), 
     html.Div([dcc.Graph(id="Casos por dia", figure=casosDia)]), 
     html.Div([dcc.Graph(id="Mortes por dia", figure=mortesDia)]),
-    html.Div('Desenvolvido por Gustavo Ribeiro; https://github.com/jornalistagustavoribeiro/PainelCovid19RibeiraoPreto', 
-              style={'textAlign':'center'})
 ])
 
 if __name__ == '__main__':
