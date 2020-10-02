@@ -32,9 +32,14 @@ caso_full = caso_full.drop(
      'place_type', 
      'state'], axis=1)
 
+# adding moving average
+
+caso_full['mediaMovelCasos'] = caso_full.rolling(window=7)['new_confirmed'].mean()
+caso_full['mediaMovelMortes'] = caso_full.rolling(window=7)['new_deaths'].mean()
+
 # creating table
 
-tabela = caso_full.drop(['new_confirmed', 'new_deaths'], axis=1)
+tabela = caso_full.drop(['new_confirmed', 'new_deaths', 'mediaMovelCasos', 'mediaMovelMortes'], axis=1)
 tabela = tabela.rename(columns={'date':'Data', 
                                 'last_available_confirmed':'Casos', 
                                 'last_available_deaths':'Mortes'})
@@ -45,13 +50,33 @@ tabelaMostra = go.Figure(data=[go.Table(header=dict(values=list(tabela.columns))
 
 # creating charts
 
-casosDia = px.bar(caso_full, x="date", y="new_confirmed", 
-                  labels={"date":"Dia", "new_confirmed":"Total"}, 
-                  title="Casos por dia")
+mediaCasosDia = go.Figure()
 
-mortesDia = px.bar(caso_full, x="date", y="new_deaths", 
-                   labels={"date":"Dia", "new_deaths":"Total"}, 
-                   title="Mortes por dia")
+mediaCasosDia.add_trace(
+    go.Scatter(
+        x=caso_full["date"],
+        y=caso_full["mediaMovelCasos"],
+        name="Média Móvel"))
+
+mediaCasosDia.add_trace(
+    go.Bar(
+        x=caso_full["date"],
+        y=caso_full["new_confirmed"],
+        name="Casos no dia"))
+
+mediaMortesDia = go.Figure()
+
+mediaMortesDia.add_trace(
+    go.Scatter(
+        x=caso_full["date"],
+        y=caso_full["mediaMovelMortes"],
+        name="Média Móvel"))
+
+mediaMortesDia.add_trace(
+    go.Bar(
+        x=caso_full["date"],
+        y=caso_full["new_deaths"],
+        name="Mortes no dia"))
 
 # creating dash app
 
@@ -62,15 +87,15 @@ app.title = 'Covid-19 Ribeirão Preto'
 app.layout = html.Div([
     html.Div('Atualizações sobre a pandemia de Covid-19 em Ribeirão Preto', 
               style={'textAlign':'center'}),
-   html.Div([html.A(href='mailto:jornalistagustavoribeiro@gmail.com', 
+    html.Div([html.A(href='mailto:jornalistagustavoribeiro@gmail.com', 
                     children="jornalistagustavoribeiro@gmail.com")],
               style={'textAlign':'center'}),
     html.Div([html.A(href='https://github.com/jornalistagustavoribeiro/PainelCovid19RibeiraoPreto', 
                     children="Github")],
-              style={'textAlign':'center'}),
-    html.Div([dcc.Graph(id='Últimas atualizações', figure=tabelaMostra)]), 
-    html.Div([dcc.Graph(id="Casos por dia", figure=casosDia)]), 
-    html.Div([dcc.Graph(id="Mortes por dia", figure=mortesDia)]),
+              style={'textAlign':'center'}), 
+    html.Div([dcc.Graph(id="casos", figure=mediaCasosDia)]), 
+    html.Div([dcc.Graph(id="mortes", figure=mediaMortesDia)]),
+    html.Div([dcc.Graph(id='ultimas', figure=tabelaMostra)])
 ])
 
 if __name__ == '__main__':
