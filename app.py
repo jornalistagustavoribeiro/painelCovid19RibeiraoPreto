@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 
 # reading the dataset 
 
-engine = sqlalchemy.create_engine("postgres://wctkjwkwhxdjwt:1dfdd5d327207ab6016a843ca30138a6b6da831769cabee2becc138242e6d1a4@ec2-54-90-68-208.compute-1.amazonaws.com:5432/dfoo06e5oo512s")
+engine = sqlalchemy.create_engine("URI")
 
 caso_full = pd.read_sql_query('select * from caso_full', con=engine)
 tabela = pd.read_sql_query('select * from tabela', con=engine)
