@@ -49,7 +49,7 @@ tabela = tabela.rename(columns=
 
 # saving to database
 
-engine = sqlalchemy.create_engine("postgres://wctkjwkwhxdjwt:1dfdd5d327207ab6016a843ca30138a6b6da831769cabee2becc138242e6d1a4@ec2-54-90-68-208.compute-1.amazonaws.com:5432/dfoo06e5oo512s")
+engine = sqlalchemy.create_engine("URI")
 conexao = engine.connect()
 caso_full.to_sql('caso_full', conexao, index=False, if_exists='append')
 tabela.to_sql('tabela', conexao, index=False, if_exists='append')
