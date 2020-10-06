@@ -7,7 +7,8 @@ miniconda3, pandas, dash, plotly, requests
 
 # Uso:
 
-Executar o arquivo app.py
+Editar o arquivo data.py a URI do seu banco de dados.
+Executar o arquivo data.py e depois app.py
 
 # Autor:
 
