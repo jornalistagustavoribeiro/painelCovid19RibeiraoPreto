@@ -1,6 +1,4 @@
 dash
 gunicorn
 pandas
-sqlalchemy
-psycopg2
 requests
