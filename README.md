@@ -3,11 +3,11 @@ Painel online com dados em tempo real sobre a pandemia do novo Coronavírus em R
 
 # Requerimentos:
 
-miniconda3, pandas, dash, plotly, requests, sqlalchemy, psycopg2
+miniconda3, pandas, dash, plotly, requests
 
 # Uso:
 
-Editar os arquivos data.py e app.py com o URI de seu banco de dados e depois executá-los. O primeiro arquivo constroe o banco de dados e o segundo mostra os gŕaficos.
+Executar o arquivo app.py
 
 # Autor:
 
