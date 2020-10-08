@@ -21,15 +21,16 @@ caso_full = pd.DataFrame(r.json()["results"])
 # cleaning dataframe
 
 caso_full = caso_full.drop(
-    ['city', 'city_ibge_code', 
-     'epidemiological_week', 
-     'estimated_population_2019', 
-     'is_last', 'is_repeated', 
-     'last_available_confirmed_per_100k_inhabitants', 
-     'last_available_date', 
-     'last_available_death_rate', 
-     'order_for_place', 
-     'place_type', 
+    ['city', 'city_ibge_code',
+     'epidemiological_week',
+     'estimated_population',
+     'estimated_population_2019',
+     'is_last', 'is_repeated',
+     'last_available_confirmed_per_100k_inhabitants',
+     'last_available_date',
+     'last_available_death_rate',
+     'order_for_place',
+     'place_type',
      'state'], axis=1)
 
 # adding moving average
@@ -46,15 +47,15 @@ tabela = caso_full.drop(
      'mediaMovelMortes'], axis=1)
 
 tabela = tabela.rename(columns=
-                       {'date':'Data', 
-                        'last_available_confirmed':'Casos', 
+                       {'date':'Data',
+                        'last_available_confirmed':'Casos',
                         'last_available_deaths':'Mortes'})
 
 # creating charts
 
-tabelaMostra = go.Figure(data=[go.Table(header=dict(values=list(tabela.columns)), 
-                                        cells=dict(values=[tabela.Data, 
-                                                           tabela.Casos, 
+tabelaMostra = go.Figure(data=[go.Table(header=dict(values=list(tabela.columns)),
+                                        cells=dict(values=[tabela.Data,
+                                                           tabela.Casos,
                                                            tabela.Mortes]))])
 
 mediaCasosDia = go.Figure()
@@ -92,19 +93,15 @@ server = app.server
 app.title = 'Covid-19 Ribeirão Preto'
 
 app.layout = html.Div([
-    html.Div('Atualizações sobre a pandemia de Covid-19 em Ribeirão Preto', 
+    html.Div('Atualizações sobre a pandemia de Covid-19 em Ribeirão Preto',
               style={'textAlign':'center'}),
-    html.Div([html.A(href='mailto:jornalistagustavoribeiro@gmail.com', 
+    html.Div([html.A(href='mailto:jornalistagustavoribeiro@gmail.com',
                     children="jornalistagustavoribeiro@gmail.com")],
               style={'textAlign':'center'}),
-    html.Div([html.A(href='https://github.com/jornalistagustavoribeiro/PainelCovid19RibeiraoPreto', 
+    html.Div([html.A(href='https://github.com/jornalistagustavoribeiro/PainelCovid19RibeiraoPreto',
                     children="Github")],
-              style={'textAlign':'center'}), 
-    html.Div([dcc.Graph(id="casos", figure=mediaCasosDia)]), 
+              style={'textAlign':'center'}),
+    html.Div([dcc.Graph(id="casos", figure=mediaCasosDia)]),
     html.Div([dcc.Graph(id="mortes", figure=mediaMortesDia)]),
     html.Div([dcc.Graph(id='ultimas', figure=tabelaMostra)])
 ])
-
-if __name__ == '__main__':
-    app.run_server()
-
