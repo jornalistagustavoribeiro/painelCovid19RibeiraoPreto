@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 
 # reading the dataset with the specified header by brasil.io
 
-url = "https://brasil.io/api/dataset/covid19/caso_full/data/?city=Ribeir%C3%A3o+Preto&format=json"
+url = "https://brasil.io/api/v1/dataset/covid19/caso_full/data/?city=Ribeir%C3%A3o%20Preto&format=json"
 headers = {"User-Agent": "python-urllib"}
 r = requests.get(url, headers=headers)
 
