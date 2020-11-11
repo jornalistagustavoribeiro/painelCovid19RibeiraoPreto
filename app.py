@@ -10,8 +10,8 @@ import plotly.graph_objects as go
 
 # reading the dataset with the specified header by brasil.io
 
-url = "https://brasil.io/api/v1/dataset/covid19/caso_full/data/?city=Ribeir%C3%A3o%20Preto&format=json"
-headers = {"User-Agent": "python-urllib"}
+url = "https://api.brasil.io/v1/dataset/covid19/caso_full/data/?search=&city=Ribeirão+Preto&format=json"
+headers = {"Authorization": "Token 266601e7f9aa22ea03785310a74683c43acd10b3"}
 r = requests.get(url, headers=headers)
 
 # get only the column "results" from the json into a dataframe
@@ -95,16 +95,15 @@ app.title = 'Covid-19 Ribeirão Preto'
 app.layout = html.Div([
 	html.Div('Atualizações sobre a pandemia de Covid-19 em Ribeirão Preto',
 			  style={'textAlign':'center'}),
+	html.Div(html.A(href='https://github.com/jornalistagustavoribeiro/painelCovid19RibeiraoPreto', children='https://github.com/jornalistagustavoribeiro/painelCovid19RibeiraoPreto'),
+			  style={'textAlign':'center'}),
 	html.Div([dcc.Graph(id="casos", figure=mediaCasosDia)]),
 	html.Div([dcc.Graph(id="mortes", figure=mediaMortesDia)]),
 	html.Div([dcc.Graph(id='ultimas', figure=tabelaMostra)]),
-	html.Div([html.A(href='https://github.com/jornalistagustavoribeiro/PainelCovid19RibeiraoPreto',
-					children="Github")],
+	html.Div(html.A(href='mailto:falecom@jornalistagustavoribeiro.com.br', children='falecom@jornalistagustavoribeiro.com.br'),
 			  style={'textAlign':'center'}),
-	html.Div([html.A(href='mailto:jornalistagustavoribeiro@gmail.com',
-					children="jornalistagustavoribeiro@gmail.com")],
-			  style={'textAlign':'center'}),
-	html.Div('Fonte: Secretarias de Saúde das Unidades Federativas, dados tratados por Álvaro Justen e equipe de voluntários Brasil.IO',
+	html.Div(children=['Fonte: Secretarias de Saúde das Unidades Federativas, dados tratados por Álvaro Justen e equipe de voluntários ', 
+	html.A(href='https://brasil.io/contribuidores/', children='Brasil.IO')],
 			  style={'textAlign':'center'})
 
 ])
